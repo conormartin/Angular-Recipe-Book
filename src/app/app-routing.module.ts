@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { ShoppingListComponent } from "./shopping-list/shopping-list.component";
-import { HomeComponent } from "./home/home.component";
+import { HomeComponent } from "./core/home/home.component";
 
 // specify routes and which components to load/redirect to
 const appRoutes: Routes = [
@@ -17,7 +17,8 @@ const appRoutes: Routes = [
 // need @NgModule to configure as a module rather than normal ts file
 @NgModule({
     // pass routes var into forRoot method of RouterModule and export 
-    imports: [RouterModule.forRoot(appRoutes)],
+    // preloadingStrategy loads lazy loaded modules in the background
+    imports: [RouterModule.forRoot(appRoutes, {preloadingStrategy: PreloadAllModules })],
     exports: [RouterModule]
 })
 

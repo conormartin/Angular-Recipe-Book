@@ -51,7 +51,7 @@ export class RecipeEditComponent implements OnInit {
       new FormGroup({
         'name': new FormControl(null, Validators.required),
         // Validators.pattern() ensures form input must match specified regex pattern
-        'amount': new FormControl(null, Validators.pattern(/^[1-9]+[0-9]*$/))
+        'amount': new FormControl(null, [Validators.required,Validators.pattern(/^[1-9]+[0-9]*$/)])
       })
     )
   }
@@ -65,6 +65,10 @@ export class RecipeEditComponent implements OnInit {
   // when cancel button clicked, go back one level in route
   onCancel() {
     this.router.navigate(['../'], {relativeTo: this.route});
+  }
+
+  getControls() {
+    return (<FormArray>this.recipeForm.get('ingredients')).controls;
   }
 
   // method to run when form initialised
