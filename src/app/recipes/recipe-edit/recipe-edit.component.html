@@ -1,0 +1,73 @@
+<div class="row">
+  <div class="col-xs-12">
+    <!-- pass recipeForm to formGroup directive and set submit function name -->
+    <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-xs-12">
+          <!-- disable save button if form input isnt valid (validators defined in ts file) -->
+          <button type="submit" class="btn btn-success" [disabled]="!recipeForm.valid">Save</button>
+          <button type="button" class="btn btn-danger" (click)="onCancel()">Cancel</button>
+        </div>
+      </div>
+      <div class="row">
+          <div class="col-xs-12">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <!-- formControlName links input to ts form var -->
+              <input type="text" id="name" class="form-control" formControlName="name">
+            </div>
+          </div>
+        </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="imagePath">Image URL</label>
+            <!-- place local ref on imagePath so can access its value and bind to src to show image preview -->
+            <input type="text" id="imagePath" class="form-control" formControlName="imagePath" #imagePath>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <!-- bind value of local ref to src to display image -->
+          <img [src]="imagePath.value" class="img-responsive">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" rows="6" class="form-control" formControlName="description"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <!-- use formArrayName to access array in ts -->
+        <div class="col-xs-12" formArrayName="ingredients">
+          <!-- ngFor creates new fiv for each element in ingredients  -->
+          <!-- need .get() function when getting reactive form properties -->
+          <!-- [formGroupName]=i sets formGroupName to current index -->
+          <div 
+            class="row" *ngFor="let ingredientCtrl of recipeForm.get('ingredients').controls; let i = index" [formGroupName]="i" style="margin-top: 10px">
+            <div class="col-xs-8">
+              <input type="text" class="form-control" formControlName="name">
+            </div>
+            <div class="col-xs-2">
+              <input type="number" class="form-control" formControlName="amount">
+            </div>
+            <div class="col-xs-2">
+              <!-- pass current index into delete method -->
+              <button type="button" class="btn btn-danger" (click)="onDeleteIngredient(i)">X</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <!-- button to add new ingredient in edit mode -->
+              <button type="button" class="btn btn-success" (click)="onAddIngredient()">Add Ingredient</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

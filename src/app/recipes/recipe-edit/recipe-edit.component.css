@@ -1,0 +1,5 @@
+/* red box around inputs if invalid, ng-touched ensures only goes red after already edited */
+input.ng-invalid.ng-touched,
+ textarea.ng-invalid.ng-touched  {
+    border: 1px solid red;
+}
